@@ -1,0 +1,8 @@
+{
+  "name": "ucf-page-assets-plugin",
+  "private": true,
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-readme-to-markdown": "^0.2.1"
+  }
+}
