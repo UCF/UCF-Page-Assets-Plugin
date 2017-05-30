@@ -13,3 +13,12 @@ if ( ! defined( 'WPINC' ) ) {
 
 define( 'UCF_PAGE_ASSETS__FILE', __FILE__ );
 
+/**
+ * INCLUDES
+ **/
+include_once 'includes/page-assets-config.php';
+
+// Initiate the Plugin Settings
+add_action( 'admin_init', array( 'UCF_Page_Assets_Config', 'settings_init' ) );
+// Add the options page.
+add_action( 'admin_menu', array( 'UCF_Page_Assets_Config', 'add_options_page' ) );
