@@ -1,11 +1,4 @@
 # UCF Events Plugin #
-**Contributors:** ucfwebcom
-**Tags:** ucf, page assets
-**Requires at least:** 4.7.5
-**Tested up to:** 4.7.5
-**Stable tag:** 1.0.0
-**License:** GPLv3 or later
-**License URI:** http://www.gnu.org/copyleft/gpl-3.0.html
 
 Provides the ability to add a custom stylesheet and/or javascript file to individual pages.
 
