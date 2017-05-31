@@ -5,6 +5,12 @@
 if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
     class UCF_Page_Assets_Metabox {
 
+		/**
+		 * Enqeues admin assets
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 * @param $hook string | The current admin hook
+		 **/
 		public static function enqueue_assets( $hook ) {
 			if ( 'post.php' === $hook ) {
 				wp_enqueue_script(
@@ -17,7 +23,12 @@ if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
 			}
 		}
 
-		public static function add_meta_box( $post_type, $post_id ) {
+		/**
+		 * Adds the Custom Page Assets metabox
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 **/
+		public static function add_meta_box() {
 			add_meta_box(
 				'ucf-page-assets',
 				__( 'Custom Page Assets' ),
@@ -26,6 +37,13 @@ if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
 			);
 		}
         
+		/**
+		 * The markup callback for the Custom Page Assets metabox
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 * @param $post WP_Post | The current post object
+		 * @return string | The function output is echoed
+		 **/
         public static function metabox_markup( $post ) {
             wp_nonce_field(  'ucf_page_assets_nonce_save', 'ucf_page_assets_nonce' );
 			$upload_link = esc_url( get_upload_iframe_src( 'media', $post->ID ) );
@@ -84,17 +102,16 @@ if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
          * @since 1.0.0
          **/
         public static function save_metabox( $post_id ) {
-            $enabled_post_types = UCF_Page_Assets_Config::get_option_or_default( 'enabled_post_types' );
             $post_type = get_post_type( $post_id );
 			// If this isn't a spotlight, return.
-			if ( ! in_array( $post_type, $enabled_post_types ) ) return;
+			if ( ! in_array( $post_type, UCF_Page_Assets_Config::enabled_posts() ) ) return;
 
             if ( ! wp_verify_nonce( $_POST['ucf_page_assets_nonce'], 'ucf_page_assets_nonce_save' ) ) return;
 
             if ( isset( $_POST['page_stylesheet'] ) ) {
-                $stylsheet = sanitize_text_field( $_POST['page_stylesheet'] );
+                $stylesheet = (int)$_POST['page_stylesheet'];
 
-                if ( $stylesheet ) {
+                if ( $stylesheet > 0 ) {
                     if ( ! add_post_meta( $post_id, 'page_stylesheet', (int)$stylesheet, true ) ) {
                         update_post_meta( $post_id, 'page_stylesheet', (int)$stylesheet );
                     }
@@ -102,9 +119,9 @@ if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
             }
 
             if ( isset( $_POST['page_javascript'] ) ) {
-                $javascript = sanitize_text_field( $_POST['page_javascript'] );
+                $javascript = (int)$_POST['page_javascript'];
 
-                if ( $javascript ) {
+                if ( $javascript > 0) {
                     if ( ! add_post_meta( $post_id, 'page_javascript', (int)$javascript, true ) ) {
                         update_post_meta( $post_id, 'page_javascript', (int)$javascript );
                     }
