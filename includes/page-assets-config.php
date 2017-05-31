@@ -275,5 +275,24 @@ if ( ! class_exists( 'UCF_Page_Assets_Config' ) ) {
 			}
 			return $retval;
 		}
+
+		/**
+		 * Returns enabled post types as a simple string array
+		 * @author Jim Barnes
+		 * @since 1.0.0
+		 * @param $post_type string | The post_type to test.
+		 * @return bool | True if enabled, false if not.
+		 **/
+		public static function enabled_posts() {
+			$enabled_post_types = self::get_option_or_default( 'enabled_post_types' );
+			$retval = array();
+			foreach ($enabled_post_types as $key=>$value) {
+				if ( $value === 'on' ) {
+					$retval[] = $key;
+				}
+			}
+
+			return $retval;
+		}
     }
 }

@@ -4,9 +4,31 @@
  **/
 if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
     class UCF_Page_Assets_Metabox {
+
+		public static function enqueue_assets( $hook ) {
+			if ( 'post.php' === $hook ) {
+				wp_enqueue_script(
+					'ucf-page-assets-js',
+					UCF_PAGE_ASSETS__JS_URL . '/ucf-page-assets.min.js',
+					array( 'jquery' ),
+					null,
+					true
+				);
+			}
+		}
+
+		public static function add_meta_box( $post_type, $post_id ) {
+			add_meta_box(
+				'ucf-page-assets',
+				__( 'Custom Page Assets' ),
+				array( 'UCF_Page_Assets_Metabox', 'metabox_markup' ),
+				UCF_Page_Assets_Config::enabled_posts()	
+			);
+		}
         
         public static function metabox_markup( $post ) {
             wp_nonce_field(  'ucf_page_assets_nonce_save', 'ucf_page_assets_nonce' );
+			$upload_link = esc_url( get_upload_iframe_src( 'media', $post->ID ) );
             $stylesheet = get_post_meta( $post->ID, 'page_stylesheet', TRUE );
             $javascript = get_post_meta( $post->ID, 'page_javascript', TRUE );
 
@@ -16,17 +38,15 @@ if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
                     <tr>
                         <th><strong>Custom Stylesheet</strong></th>
                         <td>
-                            <div class="meta-file-wrap">
-                                <?php if ( $stylesheet ) : ?>
-                                    <span class="dashicons dashicons-media-code"></span>
-                                    <?php echo basename( wp_get_attachment_url( $stylesheet ) ); ?>
-                                <?php endif; ?>
+                            <div class="css-preview meta-file-wrap <?php if ( ! $stylesheet ) { echo 'hidden'; }?>">
+								<span class="dashicons dashicons-media-code"></span>
+								<?php echo basename( wp_get_attachment_url( $stylesheet ) ); ?>
                             </div>
                             <p class="hide-if-no-js">
-                                <a class="meta-file-upload <?php if ( ! empty( $stylesheet ) ) { echo 'hidden'; }?>" href="<?php echo $upload_link; ?>">
+                                <a class="css-upload meta-file-upload <?php if ( ! empty( $stylesheet ) ) { echo 'hidden'; }?>" href="<?php echo $upload_link; ?>">
                                     Add File
                                 </a>
-                                <a class="meta-file-upload <?php if ( empty( $stylesheet ) ) { echo 'hidden'; }?>" href="#">
+                                <a class="css-remove meta-file-upload <?php if ( empty( $stylesheet ) ) { echo 'hidden'; }?>" href="#">
                                     Remove File
                                 </a>
                             </p>
@@ -37,17 +57,15 @@ if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
                     <tr>
                         <th><strong>Custom Javascript</strong></th>
                         <td>
-                            <div class="meta-file-wrap">
-                                <?php if ( $javascript ) : ?>
-                                    <span class="dashicons dashicons-media-code"></span>
-                                    <?php echo basename( wp_get_attachment_url( $javascript ) ); ?>
-                                <?php endif; ?>
+                            <div class="js-preview meta-file-wrap <?php if ( ! $javascript ) { echo 'hidden'; }?>">
+								<span class="dashicons dashicons-media-code"></span>
+								<?php echo basename( wp_get_attachment_url( $javascript ) ); ?>
                             </div>
                             <p class="hide-if-no-js">
-                                <a class="meta-file-upload <?php if ( ! empty( $javascript ) ) { echo 'hidden'; }?>" href="<?php echo $upload_link; ?>">
+                                <a class="js-upload meta-file-upload <?php if ( ! empty( $javascript ) ) { echo 'hidden'; }?>" href="<?php echo $upload_link; ?>">
                                     Add File
                                 </a>
-                                <a class="meta-file-upload <?php if ( empty( $javascript ) ) { echo 'hidden'; }?>" href="#">
+                                <a class="js-remove meta-file-upload <?php if ( empty( $javascript ) ) { echo 'hidden'; }?>" href="#">
                                     Remove File
                                 </a>
                             </p>
