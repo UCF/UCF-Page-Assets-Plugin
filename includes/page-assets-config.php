@@ -89,12 +89,6 @@ if ( ! class_exists( 'UCF_Page_Assets_Config' ) ) {
 		 * @return array
 		 **/
 		public static function format_options( $list ) {
-			foreach( $list as $key => $val ) {
-				switch( $key ) {
-					default:
-						break;
-				}
-			}
 			return $list;
 		}
 
