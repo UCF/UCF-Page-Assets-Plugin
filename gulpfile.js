@@ -54,4 +54,4 @@ gulp.task('watch', function() {
   gulp.watch(config.src.js + '/**/*.js', ['js']);
 });
 
-gulp.task('default', ['readme']);
+gulp.task('default', ['readme', 'js']);
