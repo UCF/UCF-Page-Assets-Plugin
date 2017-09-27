@@ -30,5 +30,31 @@ if ( ! class_exists( 'UCF_Page_Assets_Common' ) ) {
 				}
 			}
 		}
+
+		/**
+		 * Removes references to deleted css/js attachments from css and js
+		 * meta fields.
+		 * @author Jo Dickson
+		 * @since 1.0.1
+		 **/
+		public static function delete_post_metadata( $attachment_id ) {
+			$meta_key = '';
+			$mimetype = get_post_mime_type( $attachment_id );
+			if ( $mimetype ) {
+				switch ( $mimetype ) {
+					case 'text/css':
+						$meta_key = 'page_stylesheet';
+						break;
+					case 'application/javascript':
+						$meta_key = 'page_javascript';
+						break;
+					default:
+						break;
+				}
+			}
+			if ( $meta_key ) {
+				delete_metadata( 'post', null, $meta_key, $attachment_id, true );
+			}
+		}
 	}
 }
