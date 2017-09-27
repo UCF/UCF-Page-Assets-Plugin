@@ -34,3 +34,5 @@ add_action( 'save_post', array( 'UCF_Page_Assets_Metabox', 'save_metabox' ), 10,
 add_action( 'admin_enqueue_scripts', array( 'UCF_Page_Assets_Metabox', 'enqueue_assets' ), 99, 1 );
 // Add fontend assets
 add_action( 'wp_enqueue_scripts', array( 'UCF_Page_Assets_Common', 'enqueue_assets' ), 99, 0 );
+// Clear out saved attachment IDs from css/js meta field values when deleted
+add_action( 'delete_metadata', array( 'UCF_Page_Assets_Common', 'delete_post_metadata' ) );

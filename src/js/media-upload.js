@@ -25,9 +25,12 @@ const mediaUpload = ($) => {
     }
 
     cssFrame = wp.media({
-      title: 'Select or Upload the stylesheet for this page.',
+      title: 'Select or upload the stylesheet for this page.',
       button: {
-        text: 'Use this Stylesheet'
+        text: 'Use this stylesheet'
+      },
+      library: {
+        type: 'text/css'
       },
       multiple: false
     });
@@ -53,9 +56,12 @@ const mediaUpload = ($) => {
     }
 
     jsFrame = wp.media({
-      title: 'Select or Upload the javascript for this page.',
+      title: 'Select or upload the JavaScript for this page.',
       button: {
-        text: 'Use this Javascript'
+        text: 'Use this JavaScript'
+      },
+      library: {
+        type: 'application/javascript'
       },
       multiple: false
     });

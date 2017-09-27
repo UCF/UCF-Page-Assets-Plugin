@@ -84,7 +84,7 @@ if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
                         </td>
                     </tr>
                     <tr>
-                        <th><strong>Custom Javascript</strong></th>
+                        <th><strong>Custom JavaScript</strong></th>
                         <td>
                             <div class="js-preview meta-file-wrap <?php if ( ! $javascript ) { echo 'hidden'; }?>">
                                 <span class="dashicons dashicons-media-code"></span>
