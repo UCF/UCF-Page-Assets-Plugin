@@ -45,7 +45,6 @@ if ( ! class_exists( 'UCF_Page_Assets_Common' ) ) {
 					case 'text/css':
 						$meta_key = 'page_stylesheet';
 						break;
-					case 'text/javascript':
 					case 'application/javascript':
 						$meta_key = 'page_javascript';
 						break;
