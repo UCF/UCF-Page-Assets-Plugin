@@ -4,15 +4,17 @@ const mediaUpload = ($) => {
   let cssFrame;
   let jsFrame;
 
-  const $metaBox    = $('#ucf-page-assets');
-  const $addCssLink = $metaBox.find('.css-upload');
-  const $addJsLink  = $metaBox.find('.js-upload');
-  const $cssInput   = $metaBox.find('#page_stylesheet');
-  const $cssPreview = $metaBox.find('.css-preview');
-  const $delCssLink = $metaBox.find('.css-remove');
-  const $delJsLink  = $metaBox.find('.js-remove');
-  const $jsInput    = $metaBox.find('#page_javascript');
-  const $jsPreview  = $metaBox.find('.js-preview');
+  const $metaBox     = $('#ucf-page-assets');
+  const $addCssLink  = $metaBox.find('.css-upload');
+  const $addJsLink   = $metaBox.find('.js-upload');
+  const $cssInput    = $metaBox.find('#page_stylesheet');
+  const $cssFilename = $metaBox.find('#css-filename');
+  const $cssPreview  = $metaBox.find('.css-preview');
+  const $delCssLink  = $metaBox.find('.css-remove');
+  const $delJsLink   = $metaBox.find('.js-remove');
+  const $jsInput     = $metaBox.find('#page_javascript');
+  const $jsFilename  = $metaBox.find('#js-filename');
+  const $jsPreview   = $metaBox.find('.js-preview');
 
   const addCss = (e) => {
     e.preventDefault();
@@ -34,6 +36,7 @@ const mediaUpload = ($) => {
       const attachment = cssFrame.state().get('selection').first().toJSON();
       $cssPreview.removeClass('hidden');
       $cssInput.val(attachment.id);
+      $cssFilename.text(attachment.filename);
       $addCssLink.addClass('hidden');
       $delCssLink.removeClass('hidden');
     });
@@ -61,6 +64,7 @@ const mediaUpload = ($) => {
       const attachment = jsFrame.state().get('selection').first().toJSON();
       $jsPreview.removeClass('hidden');
       $jsInput.val(attachment.id);
+      $jsFilename.text(attachment.filename);
       $addJsLink.addClass('hidden');
       $delJsLink.removeClass('hidden');
     });
@@ -79,11 +83,13 @@ const mediaUpload = ($) => {
       $addCssLink.removeClass('hidden');
       $delCssLink.addClass('hidden');
       $cssInput.val('');
+      $cssFilename.text('');
     } else {
       $jsPreview.addClass('hidden');
       $addJsLink.removeClass('hidden');
       $delJsLink.addClass('hidden');
       $jsInput.val('');
+      $jsFilename.text('');
     }
   };
 
