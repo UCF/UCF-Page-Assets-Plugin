@@ -116,7 +116,12 @@ if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
 			$post_type = get_post_type( $post_id );
 			if ( ! in_array( $post_type, UCF_Page_Assets_Config::enabled_posts() ) ) return;
 
-			if ( ! wp_verify_nonce( $_POST['ucf_page_assets_nonce'], 'ucf_page_assets_nonce_save' ) ) return;
+			if (
+				!isset( $_POST['ucf_page_assets_nonce'] )
+				|| ! wp_verify_nonce( $_POST['ucf_page_assets_nonce'], 'ucf_page_assets_nonce_save' )
+			) {
+				return;
+			}
 
 			$stylesheet = isset( $_POST['page_stylesheet'] ) ? intval( $_POST['page_stylesheet'] ) : null;
 			$javascript = isset( $_POST['page_javascript'] ) ? intval( $_POST['page_javascript'] ) : null;
