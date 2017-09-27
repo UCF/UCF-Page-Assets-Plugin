@@ -33,10 +33,10 @@ if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
                 'ucf-page-assets',
                 __( 'Custom Assets' ),
                 array( 'UCF_Page_Assets_Metabox', 'metabox_markup' ),
-                UCF_Page_Assets_Config::enabled_posts()	
+                UCF_Page_Assets_Config::enabled_posts()
             );
         }
-        
+
         /**
          * The markup callback for the Custom Page Assets metabox
          * @author Jim Barnes
@@ -105,27 +105,18 @@ if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
             $post_type = get_post_type( $post_id );
             if ( ! in_array( $post_type, UCF_Page_Assets_Config::enabled_posts() ) ) return;
 
-            if ( ! wp_verify_nonce( $_POST['ucf_page_assets_nonce'], 'ucf_page_assets_nonce_save' ) ) return;
+			if ( ! wp_verify_nonce( $_POST['ucf_page_assets_nonce'], 'ucf_page_assets_nonce_save' ) ) return;
 
-            if ( isset( $_POST['page_stylesheet'] ) ) {
-                $stylesheet = (int)$_POST['page_stylesheet'];
+			$stylesheet = isset( $_POST['page_stylesheet'] ) ? intval( $_POST['page_stylesheet'] ) : null;
+			$javascript = isset( $_POST['page_javascript'] ) ? intval( $_POST['page_javascript'] ) : null;
 
-                if ( $stylesheet > 0 ) {
-                    if ( ! add_post_meta( $post_id, 'page_stylesheet', (int)$stylesheet, true ) ) {
-                        update_post_meta( $post_id, 'page_stylesheet', (int)$stylesheet );
-                    }
-                }
-            }
+            if ( ! add_post_meta( $post_id, 'page_stylesheet', $stylesheet, true ) ) {
+				update_post_meta( $post_id, 'page_stylesheet', $stylesheet );
+			}
 
-            if ( isset( $_POST['page_javascript'] ) ) {
-                $javascript = (int)$_POST['page_javascript'];
-
-                if ( $javascript > 0) {
-                    if ( ! add_post_meta( $post_id, 'page_javascript', (int)$javascript, true ) ) {
-                        update_post_meta( $post_id, 'page_javascript', (int)$javascript );
-                    }
-                }
-            }
+            if ( ! add_post_meta( $post_id, 'page_javascript', $javascript, true ) ) {
+				update_post_meta( $post_id, 'page_javascript', $javascript );
+			}
         }
     }
 }
