@@ -22,6 +22,18 @@ Provides the ability to add a custom stylesheet and/or javascript file to indivi
 
 ## Changelog ##
 
+### 1.0.1 ###
+Enhancements:
+* Updated admin js logic to display asset filenames when a new file is selected
+* Added mimetype filtering to the media library modal on asset fields (so only existing CSS files are shown when selecting a stylesheet, and JS files for the JS meta field)
+
+Bugfixes:
+* Fixed logic in `UCF_Page_Assets_Metabox::save_metabox()` that prevented empty meta values from updating at all, which prevented the removal of css/js files
+* Added metabox display logic and a `delete_metadata` hook to prevent invalid/removed attachments from being referenced and/or displayed on the frontend
+* Fixed plugin name in readme
+* Fixed undefined index notice on New Post screen
+* Fixed issue with admin js not being loaded on the New Post screen
+
 ### 1.0.0 ###
 * Initial release
 
