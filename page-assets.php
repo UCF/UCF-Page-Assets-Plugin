@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: UCF Page Assets
-Version: 1.0.0
+Version: 1.0.1
 Author: UCF Web Communications
 License: GPL3
 Description: Enqueue a page specific stylesheet and javascript file.
