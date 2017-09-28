@@ -1,4 +1,4 @@
-# UCF Events Plugin #
+# UCF Page Assets Plugin #
 
 Provides the ability to add a custom stylesheet and/or javascript file to individual pages.
 
