@@ -12,7 +12,7 @@ if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
 		 * @param $hook string | The current admin hook
 		 **/
 		public static function enqueue_assets( $hook ) {
-			if ( 'post.php' === $hook ) {
+			if ( 'post.php' === $hook || 'post-new.php' === $hook ) {
 				wp_enqueue_script(
 					'ucf-page-assets-js',
 					UCF_PAGE_ASSETS__JS_URL . '/ucf-page-assets.min.js',
