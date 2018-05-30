@@ -36,3 +36,5 @@ add_action( 'admin_enqueue_scripts', array( 'UCF_Page_Assets_Metabox', 'enqueue_
 add_action( 'wp_enqueue_scripts', array( 'UCF_Page_Assets_Common', 'enqueue_assets' ), 99, 0 );
 // Clear out saved attachment IDs from css/js meta field values when deleted
 add_action( 'delete_metadata', array( 'UCF_Page_Assets_Common', 'delete_post_metadata' ) );
+// Add media library support for css and js files
+add_filter( 'upload_mimes', array( 'UCF_Page_Assets_Common', 'add_custom_mimes' ) );
