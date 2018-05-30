@@ -56,5 +56,19 @@ if ( ! class_exists( 'UCF_Page_Assets_Common' ) ) {
 				delete_metadata( 'post', null, $meta_key, $attachment_id, true );
 			}
 		}
+
+		/**
+		 * Adds media library support for css and js files.
+		 * @author Cadie Brown
+		 * @since 1.0.2
+		 * @param $mimes | Current array of mime types
+		 * @return Array | Updated array of mime types
+		 **/
+		public static function add_custom_mimes( $mimes ) {
+			$mimes['css'] = 'text/css';
+			$mimes['js'] = 'application/javascript';
+
+			return $mimes;
+		}
 	}
 }
