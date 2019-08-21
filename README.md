@@ -22,6 +22,10 @@ Provides the ability to add a custom stylesheet and/or javascript file to indivi
 
 ## Changelog ##
 
+### 1.0.2 ###
+Bugfixes:
+* Added media library upload support for CSS and JS file types
+
 ### 1.0.1 ###
 Enhancements:
 * Updated admin js logic to display asset filenames when a new file is selected
