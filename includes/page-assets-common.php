@@ -13,6 +13,11 @@ if ( ! class_exists( 'UCF_Page_Assets_Common' ) ) {
 		public static function enqueue_assets() {
 			global $post;
 
+			// Global post isn't set. Bail!
+			if ( ! $post ) {
+				return;
+			}
+
 			$stylesheet_id = (int)get_post_meta( $post->ID, 'page_stylesheet', TRUE );
 			$javascript_id = (int)get_post_meta( $post->ID, 'page_javascript', TRUE );
 
