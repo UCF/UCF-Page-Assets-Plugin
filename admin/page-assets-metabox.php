@@ -15,7 +15,7 @@ if ( ! class_exists( 'UCF_Page_Assets_Metabox' ) ) {
 			if ( 'post.php' === $hook || 'post-new.php' === $hook ) {
 				wp_enqueue_script(
 					'ucf-page-assets-js',
-					UCF_PAGE_ASSETS__JS_URL . '/ucf-page-assets.min.js',
+					UCF_PAGE_ASSETS__JS_URL . '/script.min.js',
 					array( 'jquery' ),
 					null,
 					true
