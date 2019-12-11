@@ -30,7 +30,7 @@ const mediaUpload = ($) => {
         text: 'Use this stylesheet'
       },
       library: {
-        type: 'text/css'
+        type: ['text/css', 'text/plain']
       },
       multiple: false
     });
@@ -61,7 +61,7 @@ const mediaUpload = ($) => {
         text: 'Use this JavaScript'
       },
       library: {
-        type: 'application/javascript'
+        type: ['application/javascript', 'text/plain']
       },
       multiple: false
     });
