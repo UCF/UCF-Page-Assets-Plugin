@@ -22,6 +22,10 @@ Provides the ability to add a custom stylesheet and/or javascript file to indivi
 
 ## Changelog ##
 
+### 1.0.3 ###
+Bug Fixes:
+* Corrected php warning where that is thrown when the global `$post` object is null.
+
 ### 1.0.2 ###
 Bugfixes:
 * Added media library upload support for CSS and JS file types
