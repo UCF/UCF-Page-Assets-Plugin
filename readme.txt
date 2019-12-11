@@ -3,7 +3,7 @@ Contributors: ucfwebcom
 Tags: ucf, page assets
 Requires at least: 4.7.5
 Tested up to: 5.2.2
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/copyleft/gpl-3.0.html
 
@@ -28,6 +28,10 @@ Provides the ability to add a custom stylesheet and/or javascript file to indivi
 
 
 == Changelog ==
+
+= 1.0.4 =
+Bug Fixes:
+* Fixed issue where css files and js files would not show up in the media library.
 
 = 1.0.3 =
 Bug Fixes:
