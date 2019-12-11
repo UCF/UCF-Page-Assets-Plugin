@@ -1,57 +1,135 @@
-var gulp        = require('gulp'),
-    include     = require('gulp-include'),
-    eslint      = require('gulp-eslint'),
-    isFixed     = require('gulp-eslint-if-fixed'),
-    babel       = require('gulp-babel'),
-    uglify      = require('gulp-uglify'),
-    rename      = require('gulp-rename'),
-    sourcemap   = require('gulp-sourcemaps'),
-    runSequence = require('run-sequence'),
-    readme      = require('gulp-readme-to-markdown');
+const fs           = require('fs');
+const browserSync  = require('browser-sync').create();
+const gulp         = require('gulp');
+const include      = require('gulp-include');
+const eslint       = require('gulp-eslint');
+const isFixed      = require('gulp-eslint-if-fixed');
+const babel        = require('gulp-babel');
+const rename       = require('gulp-rename');
+const uglify       = require('gulp-uglify');
+const readme       = require('gulp-readme-to-markdown');
+const merge        = require('merge');
 
-var config = {
+
+let config = {
   src: {
-    js: './src/js'
+    jsPath: './src/js'
   },
   dist: {
-    js: './static/js'
-  }
+    jsPath: './static/js'
+  },
+  packagesPath: './node_modules',
+  sync: false,
+  syncTarget: 'http://localhost/wordpress/'
 };
 
-gulp.task('es-lint', function() {
-  return gulp.src(config.src.js + '/**/*.js')
-    .pipe(eslint({fix: true}))
-    .pipe(eslint.format())
-    .pipe(isFixed(config.src.js));
-});
+/* eslint-disable no-sync */
+if (fs.existsSync('./gulp-config.json')) {
+  const overrides = JSON.parse(fs.readFileSync('./gulp-config.json'));
+  config = merge(config, overrides);
+}
+/* eslint-enable no-sync */
 
-gulp.task('js-build', function() {
-  return gulp.src(config.src.js + '/script.js')
-    .pipe(include({
-      includePaths: [config.src.js]
+
+//
+// Helper functions
+//
+
+// Base JS linting function (with eslint). Fixes problems in-place.
+function lintJS(src, dest) {
+  dest = dest || config.src.jsPath;
+
+  return gulp.src(src)
+    .pipe(eslint({
+      fix: true
     }))
-    .on('error', console.log)
+    .pipe(eslint.format())
+    .pipe(isFixed(dest));
+}
+
+// Base JS compile function
+function buildJS(src, dest) {
+  dest = dest || config.dist.jsPath;
+
+  return gulp.src(src)
+    .pipe(include({
+      includePaths: [config.packagesPath, config.src.jsPath]
+    }))
+    .on('error', console.log) // eslint-disable-line no-console
     .pipe(babel())
     .pipe(uglify())
-    .pipe(rename('ucf-page-assets.min.js'))
-    .pipe(gulp.dest(config.dist.js));
+    .pipe(rename({
+      extname: '.min.js'
+    }))
+    .pipe(gulp.dest(dest));
+}
+
+// BrowserSync reload function
+function serverReload(done) {
+  if (config.sync) {
+    browserSync.reload();
+  }
+  done();
+}
+
+// BrowserSync serve function
+function serverServe(done) {
+  if (config.sync) {
+    browserSync.init({
+      proxy: {
+        target: config.syncTarget
+      }
+    });
+  }
+  done();
+}
+
+
+//
+// JavaScript
+//
+
+// Run eslint on js files in src.jsPath
+gulp.task('es-lint-plugin', () => {
+  return lintJS([`${config.src.jsPath}/*.js`], config.src.jsPath);
 });
 
-gulp.task('js', function() {
-  runSequence('es-lint', 'js-build');
+// Concat and uglify js files through babel
+gulp.task('js-build-plugin', () => {
+  return buildJS(`${config.src.jsPath}/script.js`, config.dist.jsPath);
 });
 
-gulp.task('readme', function() {
-  gulp.src('readme.txt')
+// All js-related tasks
+gulp.task('js', gulp.series('es-lint-plugin', 'js-build-plugin'));
+
+
+//
+// Documentation
+//
+
+// Generates a README.md from README.txt
+gulp.task('readme', () => {
+  return gulp.src('readme.txt')
     .pipe(readme({
       details: false,
-      screenshot_ext: []
+      screenshot_ext: [] // eslint-disable-line camelcase
     }))
     .pipe(gulp.dest('.'));
 });
 
-gulp.task('watch', function() {
-  gulp.watch(config.src.js + '/**/*.js', ['js']);
+
+//
+// Rerun tasks when files change
+//
+gulp.task('watch', (done) => {
+  serverServe(done);
+
+  gulp.watch(`${config.src.jsPath}/**/*.js`, gulp.series('js', serverReload));
+  gulp.watch('./**/*.php', gulp.series(serverReload));
 });
 
-gulp.task('default', ['readme', 'js']);
+
+//
+// Default task
+//
+gulp.task('default', gulp.series('js', 'readme'));
