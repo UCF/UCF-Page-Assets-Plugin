@@ -30,7 +30,8 @@ const mediaUpload = ($) => {
         text: 'Use this stylesheet'
       },
       library: {
-        type: ['text/css', 'text/plain']
+        type: ['text/css', 'text/plain'],
+        search: '.css'
       },
       multiple: false
     });
