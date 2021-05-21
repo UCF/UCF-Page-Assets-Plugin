@@ -22,6 +22,11 @@ Provides the ability to add a custom stylesheet and/or javascript file to indivi
 
 ## Changelog ##
 
+### 1.0.5 ###
+Enhancements:
+* Modified filtering options for files that are selectable from the media library modal when choosing a CSS or JS file for a page/post.  Both CSS and JS will now be filtered by their respective file extensions by default (to filter out other files with the `text/plain` type), and JS filtering now includes the `text/javascript` type.
+* Updated packages.
+
 ### 1.0.4 ###
 Bug Fixes:
 * Fixed issue where css files and js files would not show up in the media library.
@@ -63,6 +68,3 @@ None
 ## Development & Contributing ##
 
 NOTE: this plugin's readme.md file is automatically generated.  Please only make modifications to the readme.txt file, and make sure the `gulp readme` command has been run before committing readme changes.
-
-### Wishlist/TODOs ###
-* Complete shortcode interface registration (need to complete shortcode wysiwyg interface plugin first)
