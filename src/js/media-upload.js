@@ -61,7 +61,7 @@ const mediaUpload = ($) => {
         text: 'Use this JavaScript'
       },
       library: {
-        type: ['application/javascript', 'text/plain']
+        type: ['application/javascript', 'text/javascript', 'text/plain']
       },
       multiple: false
     });
