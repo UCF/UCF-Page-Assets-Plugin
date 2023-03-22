@@ -22,6 +22,10 @@ Provides the ability to add a custom stylesheet and/or javascript file to indivi
 
 ## Changelog ##
 
+### 1.0.6 ###
+Enhancements:
+* Added composer file.
+
 ### 1.0.5 ###
 Enhancements:
 * Modified filtering options for files that are selectable from the media library modal when choosing a CSS or JS file for a page/post.  Both CSS and JS will now be filtered by their respective file extensions by default (to filter out other files with the `text/plain` type), and JS filtering now includes the `text/javascript` type.

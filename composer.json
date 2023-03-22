@@ -1,0 +1,8 @@
+{
+    "name": "ucf/ucf-page-assets-plugin",
+    "description": "Provides the ability to add a custom stylesheet and/or javascript file to individual pages.",
+    "type": "wordpress-plugin",
+    "require": {
+        "composer/installers": "~1.0"
+    }
+}
